@@ -1,5 +1,6 @@
 FROM ubuntu:16.04
-MAINTAINER Rumen LISHKOV "rlishkov@ingimax.com"
+MAINTAINER Rumen LISHKOV "airdata@abv.bg"
+
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apt update && apt-get install -y ca-certificates wget nano net-tools locales
 RUN locale-gen en_US.UTF-8
