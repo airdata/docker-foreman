@@ -1,8 +1,9 @@
 #!/bin/bash -e
 /etc/init.d/postgresql start
-echo "sleeping for postgresql to ensure started"
 sleep 10
 /etc/init.d/foreman start
+sleep 15
 /etc/init.d/puppetserver start
-service foreman-proxy restart
-/usr/sbin/apache2 -k start
+sleep 10
+/etc/init.d/foreman-proxy start
+/usr/sbin/apache2ctl -D FOREGROUND

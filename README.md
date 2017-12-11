@@ -1,10 +1,11 @@
-airdata/foreman
-=======
+Foreman 1.16
+============
+This image is desing to install foreman with ec2 plugin.
+Requierments to running this image is a hostname - foreman.lab.
+  - example:  'docker run -d -h foreman.lab nexus.lab:8860/foreman'
 
-[![Automated Build](https://img.shields.io/docker/build/dock0/foreman.svg)](https://hub.docker.com/r/airdata/foreman/)
+We should run the image with the following persistant docker volumes for to avoind losing data:
+  - Postgresql where db is ALREADY! installed (/var/lib/postgresql)
+  - Puppetlabs where certs and envoirments are ALREADY! installed (/etc/puppetlabs)
 
-[![Build Status](https://img.shields.io/circleci/project/dock0/foreman/master.svg)](https://circleci.com/gh/dock0/foreman)
-
-[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
-
-Foreman for devops applications
+ENTRYPOINT will start postgresql, foreman, puppet and apache.
