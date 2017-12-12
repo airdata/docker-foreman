@@ -22,7 +22,5 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
 	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml
 COPY start.sh /
-ADD ssl /etc/puppetlabs/puppet/ssl
 RUN chmod 700 /start.sh && \
-  chown -R puppet:puppet /etc/puppetlabs/puppet/
 ENTRYPOINT /bin/bash /start.sh
