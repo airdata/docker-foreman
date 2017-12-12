@@ -4,8 +4,12 @@ This image is desing to install foreman with ec2 plugin.
 Requierments to running this image is a hostname - foreman.lab.
   - example:  'docker run -d -h foreman.lab nexus.lab:8860/foreman'
 
-We should run the image with the following persistant docker volumes for to avoind losing data:
-  - Postgresql where db is ALREADY! installed (/var/lib/postgresql)
-  - Puppetlabs where certs and envoirments are ALREADY! installed (/etc/puppetlabs)
+The container should be run with volumes with the persistent volumes for to avoiding losing data:
+  "foreman/var/lib/postgresql:/var/lib/postgresql",
+  "foreman/etc/puppetlabs/puppet/ssl/public_keys:/etc/puppetlabs/puppet/ssl/public_keys",
+  "foreman/etc/puppetlabs/code:/etc/puppetlabs/code",
+  "foreman/etc/puppetlabs/puppetserver:/etc/puppetlabs/puppetserver",
+  "foreman/opt/puppetlabs:/opt/puppetlabs",
+  "foreman/etc/puppetlabs/puppet:/etc/puppetlabs/puppet
 
 ENTRYPOINT will start postgresql, foreman, puppet and apache.
