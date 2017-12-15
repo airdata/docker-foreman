@@ -9,8 +9,7 @@ RUN chmod 700 /start.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin:/sbin:/bin
 ENV FOREOPTS --enable-foreman-compute-ec2 \
-	--enable-puppet \
-	--puppet-listen=true 
+	--enable-puppet 
 
 # Run and install that shit
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
@@ -39,11 +38,7 @@ RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools 
     (/usr/sbin/foreman-installer $FOREOPTS || /bin/true) && \
 	sed -i -e "s/START=no/START=yes/g" /etc/default/foreman && \
 	sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
-	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
-	/etc/init.d/puppetserver stop && \
-	export PATH=$PATH:/opt/puppetlabs/bin && \
-	sed -i 's?:/usr/bin:?:/usr/bin:/opt/puppetlabs/bin:?' /etc/environment && \
-	/opt/puppetlabs/bin/puppet resource service apache2 ensure=stopped
+	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml 
 
 # Container run on start "start.sh"
 ENTRYPOINT /bin/bash /start.sh
