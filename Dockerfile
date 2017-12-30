@@ -9,7 +9,14 @@ RUN chmod 700 /start.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin:/sbin:/bin
 ENV FOREOPTS --enable-foreman-compute-ec2 \
-	--enable-puppet 
+  --enable-puppet \
+  --puppet-server-ca=false \
+  --puppet-server-foreman-url=https://foreman.lab \
+  --enable-foreman-proxy \
+  --foreman-proxy-puppetca=false \
+  --foreman-proxy-tftp=false \
+  --foreman-proxy-foreman-base-url=https://foreman.lab \
+  --foreman-proxy-trusted-hosts=foreman.lab 
 
 # Run and install that shit
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
@@ -22,7 +29,7 @@ RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools 
 	wget -q https://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
 	apt-get install -y software-properties-common && \
 	apt-get update && \
-	apt-get --yes install foreman-installer && \
+	apt-get --yes install foreman-installer foreman-postgresql && \
 	apt-get install -y git python-pip python-dev python-jinja2 python-yaml python-paramiko python-httplib2 python-six python-crypto sshpass && \
 	apt-get purge -y python-requests python-requests-whl && \
 	apt-get autoremove -y && \
