@@ -1,3 +1,5 @@
+FROM ubuntu:16.04
+MAINTAINER Rumen LISHKOV "rlishkov@ingimax.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin:/sbin:/bin
