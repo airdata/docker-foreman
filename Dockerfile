@@ -50,6 +50,10 @@ RUN \
     /etc/init.d/puppetserver stop && \
     export PATH=$PATH:/opt/puppetlabs/bin && \
     sed -i 's?:/usr/bin:?:/usr/bin:/opt/puppetlabs/bin:?' /etc/environment && \
+    sed -i -e "s/START=no/START=yes/g" /etc/default/foreman && \
+    sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
+    sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml
+
     /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped && \
     /opt/puppetlabs/bin/puppet resource service apache2 ensure=stopped && \
     export SSLDIR=`puppet config print ssldir --section master` && \
