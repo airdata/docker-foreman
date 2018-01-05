@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER Rumen LISHKOV "rlishkov@ingimax.com"
 
-COPY start-image.sh /
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
     --foreman-admin-password='Pd2$*@%s' \
@@ -27,7 +26,11 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
     ln -s /opt/puppetlabs/puppet/bin/puppet /usr/sbin/
 
-RUN cp -p /etc/puppetlabs/puppet/ssl/certs/${HOSTNAME}.pem /etc/puppetlabs/puppet/ssl/certs/foreman.lab && \
-    chmod 700 /start-image.sh
 
-ENTRYPOINT /start-image.sh
+COPY foreman.lab.pem /etc/puppetlabs/puppet/ssl/certs/
+COPY start.sh /
+RUN chmod 644 /etc/puppetlabs/puppet/ssl/certs/foeman.lab.pem && \
+    chmod 700 /start.sh
+
+ENTRYPOINT /start.sh
+
