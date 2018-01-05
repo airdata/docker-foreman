@@ -1,16 +1,19 @@
 Foreman 1.16
 -------------
-The docker image is published to nexus.lab:8860/foreman
+[![Automated Build](https://img.shields.io/docker/build/dock0/foreman.svg)](https://hub.docker.com/r/airdata/foreman-docker/)
+[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
+
 
 The image is desing to install foreman with ec2 and docker plugin.
 Requierments to running this image is to start container with a hostname - foreman.lab.
 
 Run container
 ========================
-```
-docker run -d -h foreman.lab nexus.lab:8860/foreman
 
 ```
+docker run -d -h foreman.lab airdata/foreman-docker
+```
+
 docker-compose
 ===============
 ```
