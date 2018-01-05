@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools 
 	wget -q https://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
 	apt-get install -y software-properties-common && \
 	apt-get update && \
-	apt-get --yes install foreman-installer 
+	apt-get --yes install foreman-installer && \
 	apt-get purge -y python-requests python-requests-whl && \
 	apt-get autoremove -y && \
 	rm -f /usr/share/foreman-installer/checks/hostname.rb && \
