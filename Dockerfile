@@ -5,16 +5,8 @@ COPY start.sh /
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
 	--foreman-admin-password='Pd2$*@%s' \
-	--enable-foreman-plugin-docker \
-	--enable-puppet \
-	--puppet-server-ca=false \
-	--puppet-server-foreman-url=https://foreman.lab \
-	--enable-foreman-proxy \
-	--foreman-proxy-puppetca=false \
-	--foreman-proxy-tftp=false \
-	--foreman-proxy-foreman-base-url=https://foreman.lab \
-	--foreman-proxy-trusted-hosts=foreman.lab 
-
+	--enable-foreman-plugin-docker 
+	
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
 	locale-gen "en_US.UTF-8" && \
 	wget https://apt.puppetlabs.com/puppet5-release-xenial.deb && \
@@ -37,4 +29,3 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	chmod 700 /start.sh
 
 ENTRYPOINT /start.sh
-
