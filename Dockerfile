@@ -29,7 +29,7 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 
 COPY foreman.lab.pem /etc/puppetlabs/puppet/ssl/certs/
 COPY start.sh /
-RUN chmod 644 /etc/puppetlabs/puppet/ssl/certs/foeman.lab.pem && \
+RUN chmod 644 /etc/puppetlabs/puppet/ssl/certs/foreman.lab.pem && \
     chmod 700 /start.sh
 
 ENTRYPOINT /start.sh
