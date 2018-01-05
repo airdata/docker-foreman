@@ -5,7 +5,7 @@ COPY start.sh /
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
 	--foreman-admin-password='Pd2$*@%s' \
-	--enable-foreman-plugin-docker
+	--enable-foreman-plugin-docker \
 	--enable-puppet \
 	--puppet-server-ca=false \
 	--puppet-server-foreman-url=https://foreman.lab \
