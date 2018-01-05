@@ -1,0 +1,7 @@
+version: '3'
+services:
+  foreman:
+      build: .
+      env_file: "variables.env"
+      container_name: foreman
+      image: airdata/foreman

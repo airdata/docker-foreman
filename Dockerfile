@@ -1,11 +1,19 @@
 FROM ubuntu:16.04
-MAINTAINER Rumen LISHKOV "rlishkov@ingimax.com"
+MAINTAINER Rumen LISHKOV "rumenlishkov@gmail.com"
 
 COPY start.sh /
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
-    --foreman-admin-password='Pd2$*@%s' \
-    --enable-foreman-plugin-docker
+	--foreman-admin-password='Pd2$*@%s' \
+	--enable-foreman-plugin-docker
+	--enable-puppet \
+	--puppet-server-ca=false \
+	--puppet-server-foreman-url=https://foreman.lab \
+	--enable-foreman-proxy \
+	--foreman-proxy-puppetca=false \
+	--foreman-proxy-tftp=false \
+	--foreman-proxy-foreman-base-url=https://foreman.lab \
+	--foreman-proxy-trusted-hosts=foreman.lab 
 
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
 	locale-gen "en_US.UTF-8" && \
@@ -25,18 +33,6 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	sed -i -e "s/START=no/START=yes/g" /etc/default/foreman && \
 	sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
 	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
-	cp -p /etc/puppetlabs/puppet/ssl/private_keys/*.pem /etc/puppetlabs/puppet/ssl/private_keys/foreman.lab.pem && \
-	cp -p /etc/puppetlabs/puppet/ssl/public_keys/*.pem /etc/puppetlabs/puppet/ssl/public_keys/foreman.lab.pem && \
-	sed -i "s/client_certname: .*$/client_certname: foreman.lab/" /etc/foreman-installer/scenarios.d/foreman-answers.yaml && \
-	sed -i "s/server_certname: .*$/server_certname: foreman.lab/" /etc/foreman-installer/scenarios.d/foreman-answers.yaml && \
-	sed -i "s?:ssl_cert: .*?:ssl_cert: \"/etc/puppetlabs/puppet/ssl/certs/foreman.lab.pem\"?" /etc/puppetlabs/puppet/foreman.yaml && \
-	sed -i "s?:ssl_key: .*?:ssl_key: \"/etc/puppetlabs/puppet/ssl/private_keys/foreman.lab.pem\"?" /etc/puppetlabs/puppet/foreman.yaml && \
-	sed -i "s/certname = .*/certname = foreman.lab/g" /etc/puppetlabs/puppet/puppet.conf && \
-	sed -i "s?ssl-cert: .*?ssl-cert: /etc/puppetlabs/puppet/ssl/certs/foreman.lab.pem?" /etc/puppetlabs/puppetserver/conf.d/webserver.conf && \
-	sed -i "s?ssl-key: .*?ssl-key: /etc/puppetlabs/puppet/ssl/private_keys/foreman.lab.pem?" /etc/puppetlabs/puppetserver/conf.d/webserver.conf && \
-	sed -i "s/client_certname: = .*/client_certname: = foreman.lab/g" /etc/foreman-installer/scenarios.d/foreman-answers.yaml && \
-	sed -i "s?:ssl-cert: .*?:ssl_cert: \"/etc/puppetlabs/puppet/ssl/certs/foreman.lab.pem\"?" /etc/puppetlabs/puppetserver/conf.d/webserver.conf && \
-	sed -i "s?:ssl-key: .*?:ssl_key: \"/etc/puppetlabs/puppet/ssl/private_keys/foreman.lab.pem\"?" /etc/puppetlabs/puppetserver/conf.d/webserver.conf && \
 	ln -s /opt/puppetlabs/puppet/bin/puppet /usr/sbin/ && \
 	chmod 700 /start.sh
 
