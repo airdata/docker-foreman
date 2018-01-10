@@ -4,8 +4,16 @@ MAINTAINER Rumen LISHKOV "rumenlishkov@gmail.com"
 COPY start.sh /
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
-	--foreman-admin-password='Pd2$*@%s' \
-	--enable-foreman-plugin-docker 
+	--foreman-admin-password='admin' \
+	--enable-foreman-plugin-docker \
+	--foreman-locations-enabled \
+	--foreman-proxy-http \
+	--puppet-agent \
+	--enable-foreman \
+	--enable-foreman-cli \
+	--foreman-proxy-puppet \
+	--enable-foreman-plugin-tasks \
+	--enable-foreman-plugin-templates 
 	
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
 	locale-gen "en_US.UTF-8" && \
