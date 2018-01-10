@@ -6,11 +6,12 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
 	--foreman-admin-password='admin' \
 	--enable-foreman-plugin-docker \
-	--foreman-locations-enabled \
 	--foreman-proxy-http \
-	--puppet-agent \
+	--puppet-server \
 	--enable-foreman \
 	--enable-foreman-cli \
+	--enable-foreman-proxy \
+	--enable-foreman-plugin-setup \
 	--foreman-proxy-puppet \
 	--enable-foreman-plugin-tasks \
 	--enable-foreman-plugin-templates 
@@ -35,13 +36,8 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
 	ln -s /opt/puppetlabs/bin/puppet /usr/sbin/ && \
 	chmod 700 /start.sh && \
-    /etc/init.d/puppetserver stop && \
     export PATH=$PATH:/opt/puppetlabs/bin && \
     sed -i 's?:/usr/bin:?:/usr/bin:/opt/puppetlabs/bin:?' /etc/environment && \
-    /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped && \
-    /opt/puppetlabs/bin/puppet resource service apache2 ensure=stopped && \
-    export SSLDIR=`puppet config print ssldir --section master` && \
-    rm -rf $SSLDIR && \
 	touch /var/lib/foreman/.firsttime
 
 ENTRYPOINT /start.sh
