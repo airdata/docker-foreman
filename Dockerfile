@@ -5,7 +5,6 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
 	--foreman-admin-password='admin' \
 	--enable-foreman-plugin-docker \
-	--enable-foreman-plugin-setup \
 	--enable-foreman-plugin-tasks \
 	--enable-foreman-plugin-templates 
 	
