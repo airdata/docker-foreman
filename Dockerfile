@@ -25,13 +25,8 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	echo "127.0.0.1  foreman.lab" >> /etc/hosts && \
 	echo "Running foreman installer" && \
     (/usr/sbin/foreman-installer $FOREOPTS || /bin/true) && \
-	sed -i -e "s/START=no/START=yes/g" /etc/default/foreman && \
-	sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
-	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
-	ln -s /opt/puppetlabs/puppet/bin/puppet /usr/sbin/ && \
-	chmod 700 /start.sh
-
-
-COPY start.sh /
+	ln -s /opt/puppetlabs/bin/puppet /usr/sbin/ && \
+	chmod 700 /start.sh && \
+	touch /var/lib/foreman/.firsttime
 
 ENTRYPOINT /start.sh
