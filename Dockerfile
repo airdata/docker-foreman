@@ -1,11 +1,13 @@
 FROM ubuntu:16.04
-MAINTAINER Rumen LISHKOV "rlishkov@ingimax.com"
+MAINTAINER Rumen LISHKOV "rumenlishkov@gmail.com"
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV FOREOPTS  --enable-foreman-compute-ec2 \
-    --foreman-admin-password='Pd2$*@%s' \
-    --enable-foreman-plugin-docker
-
+	--foreman-admin-password='admin' \
+	--enable-foreman-plugin-docker \
+	--enable-foreman-plugin-tasks \
+	--enable-foreman-plugin-templates 
+	
 RUN apt-get update && apt-get install --yes ca-certificates wget nano net-tools locales && \
 	locale-gen "en_US.UTF-8" && \
 	wget https://apt.puppetlabs.com/puppet5-release-xenial.deb && \
@@ -24,10 +26,8 @@ RUN apt-get update && apt-get --yes install foreman-installer foreman-postgresql
 	sed -i -e "s/START=no/START=yes/g" /etc/default/foreman && \
 	sed -i -e "s/:require_ssl: true/:require_ssl: false/g" /etc/foreman/settings.yaml && \
 	sed -i -e "s/:puppetrun: false/:puppetrun: true/g" /etc/foreman/settings.yaml && \
-	ln -s /opt/puppetlabs/puppet/bin/puppet /usr/sbin/ && \
-	chmod 700 /start.sh
-
+	ln -s /opt/puppetlabs/puppet/bin/puppet /usr/sbin/ 
 
 COPY start.sh /
-
+RUN	chmod 700 /start.sh 
 ENTRYPOINT /start.sh
