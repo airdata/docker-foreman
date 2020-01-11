@@ -4,4 +4,4 @@ services:
       build: .
       env_file: "variables.env"
       container_name: foreman
-      image: airdata/foreman
+      image: airdata/foreman-docker
