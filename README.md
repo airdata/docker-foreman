@@ -1,4 +1,5 @@
 Foreman 1.16
+[![CircleCI](https://img.shields.io/circleci/project/github/airdata/foreman-in-docker.svg)](https://circleci.com/gh/airdata/foreman-in-docker) 
 -------------
 This is a foreman in docker is with ec2 and docker plugin.
 
