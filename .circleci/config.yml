@@ -1,9 +1,9 @@
-version: 2.1 # use CircleCI 2.1
+version: 2.1
 jobs:
   ssh-job:
     machine: true
     working_directory: ~/kibana-in-docker
-    
+
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -21,7 +21,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/foreman-in-docker
-      - setup_remote_docker
       - run:
           name: Load archived Docker image
           command: |
