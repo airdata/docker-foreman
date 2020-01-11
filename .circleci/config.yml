@@ -1,6 +1,9 @@
 version: 2.1 # use CircleCI 2.1
 jobs:
   ssh-job:
+    machine: true
+    working_directory: ~/kibana-in-docker
+    
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -11,9 +14,8 @@ jobs:
             ssh ubuntu@18.184.96.136 ls -la
 
   build_jenkins:
-    docker:
-      - image: circleci/php:7.1-node-browsers
-    working_directory: ~/foreman-in-docker
+    machine: true
+    working_directory: ~/kibana-in-docker
 
     steps:
       - checkout
