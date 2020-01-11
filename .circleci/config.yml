@@ -1,5 +1,15 @@
 version: 2.1 # use CircleCI 2.1
 jobs:
+  ssh-job:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "29:d6:88:1b:58:a0:47:52:ac:91:9c:cd:47:a3:f4:91"
+      - run:
+          name: Load archived Docker image
+          command: |
+            ssh ubuntu@18.184.96.136 ls -la
+
   build_jenkins:
     docker:
       - image: circleci/php:7.1-node-browsers
@@ -24,3 +34,4 @@ workflows:
   default:
     jobs:
       - build_jenkins
+      - ssh-job
