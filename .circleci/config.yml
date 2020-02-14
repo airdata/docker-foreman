@@ -22,4 +22,3 @@ workflows:
   default:
     jobs:
       - build_jenkins
-      - ssh-job
