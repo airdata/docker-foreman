@@ -1,9 +1,5 @@
 version: 2.1
 jobs:
-  ssh-job:
-    machine: true
-    working_directory: ~/kibana-in-docker
-
   build_jenkins:
     machine: true
     working_directory: ~/kibana-in-docker
