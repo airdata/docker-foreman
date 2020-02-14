@@ -4,15 +4,6 @@ jobs:
     machine: true
     working_directory: ~/kibana-in-docker
 
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "29:d6:88:1b:58:a0:47:52:ac:91:9c:cd:47:a3:f4:91"
-      - run:
-          name: Load archived Docker image
-          command: |
-            ssh ubuntu@18.184.96.136 ls -la
-
   build_jenkins:
     machine: true
     working_directory: ~/kibana-in-docker
