@@ -1,5 +1,9 @@
 version: 2.1
 jobs:
+  build:
+    branches:
+      only:
+        - master
   build_jenkins:
     machine: true
     working_directory: ~/foreman-in-docker
