@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build_jenkins:
     machine: true
-    working_directory: ~/kibana-in-docker
+    working_directory: ~/foreman-in-docker
 
     steps:
       - checkout
